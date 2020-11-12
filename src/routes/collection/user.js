@@ -11,7 +11,7 @@ const { userService } = require('../../logic')
 router.post('/user/auth', jsonBodyParser, (req, res) => {
     routeHandler(()=> {
         const { email } = req.body
-        debugger
+        
         return userService.authenticateUser({email})
                 .then(({token})=> {
                     res.json({
