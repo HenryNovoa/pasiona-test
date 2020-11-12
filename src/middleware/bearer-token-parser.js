@@ -1,15 +1,16 @@
-function bearerTokenParser(req, res, next) {
-    try {
-        const { headers: { authorization } } = req
+function bearerTokenParser (req, res, next) {
+  try {
+    console.log(req)
+    const { headers: { authorization } } = req
 
-        const token = authorization.split(' ')[1]
+    const token = authorization.split(' ')[1]
 
-        req.token = token
+    req.token = token
 
-        next()
-    } catch (err) {
-        next()
-    }
+    next()
+  } catch (err) {
+    next()
+  }
 }
 
 module.exports = bearerTokenParser

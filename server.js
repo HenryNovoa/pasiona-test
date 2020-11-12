@@ -1,24 +1,21 @@
 const express = require('express')
 const config = require('./config')
-const fs = require('fs')
 const packageJSON = require('./package.json')
-const { DATA_URL, API_PORT } = config
-//Upload the routes
+const { API_PORT } = config
+// Upload the routes
 const {
-    user,
-    policy
+  user,
+  policy
 } = require('./src/routes')
-
-
 const app = express()
 
 // Define global middleware
 app.use(express.json())
+
 // Defines the routes used.
-app.use('/api',user)
-app.use('/api',policy)
+app.use('/api', user)
+app.use('/api', policy)
 
-app.listen(API_PORT, ()=> {
-    console.log(`${packageJSON.name} ${packageJSON.version} up and running on http://localhost:${API_PORT}`)
- })
-
+app.listen(API_PORT, () => {
+  console.log(`${packageJSON.name} ${packageJSON.version} up and running on http://localhost:${API_PORT}`)
+})
