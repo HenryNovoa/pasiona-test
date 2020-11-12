@@ -12,6 +12,8 @@ const {
 
 const app = express()
 
+// Define global middleware
+app.use(express.json())
 // Defines the routes used.
 app.use('/api',user)
 app.use('/api',policy)
