@@ -59,4 +59,20 @@ Custom middlewares were used in order to handle access to the endpoints for cert
 Morgan and winston were used for logging, that logs everytime a user makes an api call to an endpoint and when 
 a the user is started and abruptly shut down.
 
+Only POST requests were used in the API for the following reasons: 
+- If using GET, there's a bigger risk that your server logging tools will also log sensitive information by default.
+
+- Also, in some scenarios, having sensitive information in the URL as query parameters (for example /data/something?secret_key=123321) will also be stored in the browser history, and this might be a risk if shared computers are common for your users. 
+
+The JWT_SECRET has been kept in the .env file to be able to start and use the APP as quickly as possible.
+
+As a guideline to review the API, I suggest first taking a look at the .env file, then the config file to review 
+how they get exported.
+Then I sugggest looking at the server.js file
+Afterwards I suggest looking at the routes files then the logic files.
+I believe this will give a general idea of how the arquitecture and the workflow works.
+
+
+
+
 
