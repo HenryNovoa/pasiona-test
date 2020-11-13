@@ -36,7 +36,10 @@ app.use('/api', user)
 app.use('/api', policy)
 
 // Log if the server has been successfully initiated
-app.listen(API_PORT, HOST, () => logger.info(`${packageJSON.name} ${packageJSON.version} running and listening at http://${HOST}:${API_PORT}/api`))
+app.listen(API_PORT, HOST, () => {
+    logger.info(`${packageJSON.name} ${packageJSON.version} running and listening at http://${HOST}:${API_PORT}/api`)
+    console.log(`${packageJSON.name} ${packageJSON.version} running and listening at http://${HOST}:${API_PORT}/api`)
+})
 
 // Log if the server is abruptly disconnected
 process.on('SIGINT', () => {
