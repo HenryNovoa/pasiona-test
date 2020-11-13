@@ -1,5 +1,7 @@
 const { AuthError, NotFoundError, ValueError, NotAllowedError } = require('../errors')
 
+// This is a handler for controlling the errors that a given endpoint can give.
+// Is is a promise wrapped around a try/catch to be able to capture sincronous errors as well.
 function routeHandler (callback, res) {
   try {
     callback()

@@ -6,13 +6,16 @@ const { clientData, policyData } = require('../data')
 
 const { JWT_SECRET } = config
 const userService = {
-  /**
-     * @param { string } email to log in
-     *
-     * @throws { Error } in case of empty parameter
-     * @throws { Error } in case
-     */
-
+ /**
+ * Authenticates the user given an email
+ * 
+ * @param {string} email user's unique email
+ * 
+ * @returns {Promise<Object>} returns a Promise with the user's token and id
+ * 
+ * @throws {NotFoundError} if given email does not exist
+ * 
+ */
   authenticateUser ({ email }) {
     validate([{ key: 'email', value: email, type: String }])
     return (async () => {
@@ -31,6 +34,17 @@ const userService = {
     })()
   },
 
+   /**
+ * Finds user given an email
+ * 
+ * @param {string} email User's email
+ * 
+ * @returns {Promise<Object>} An object with the user's information
+ * 
+ * @throws {Error} If there is no data from the provided URL
+ * @throws {NotFoundError} If no user with the given email is found
+ * 
+*/
   findUserByEmail ({ email }) {
     validate([{ key: 'email', value: email, type: String }])
 
@@ -51,6 +65,17 @@ const userService = {
     })()
   },
 
+  /**
+ * Finds user given a user id
+ * 
+ * @param {string} userId User's id
+ * 
+ * @returns {Promise<Object>} An object with the user's information
+ * 
+ * @throws {Error} If there is no data from the provided URL
+ * @throws {NotFoundError} If no user with the given user id is found
+ * 
+*/
   findUserByUserId ({ userId }) {
     validate([{ key: 'userId', value: userId, type: String }])
 
@@ -67,6 +92,17 @@ const userService = {
     })()
   },
 
+/**
+ * Finds user given a username
+ * 
+ * @param {string} userName User's name
+ * 
+ * @returns {Promise<Object>} An object with the user's information
+ * 
+ * @throws {Error} If there is no data from the provided URL
+ * @throws {NotFoundError} If no user with the given email is found
+ * 
+*/
   findUserByUserName ({ userName }) {
     validate([{ key: 'userName', value: userName, type: String }])
 
@@ -85,6 +121,18 @@ const userService = {
     })()
   },
 
+  /**
+ * Finds user linked to a policy number
+ * 
+ * @param {string} policyNumber User's email
+ * 
+ * @returns {Promise<Object>} An object with the user's information
+ * 
+ * @throws {Error} If there is no data from the provided URL
+ * @throws {NotFoundError} If the policy number does not exist
+ * @throws {NotFoundError} If the policy number does not have any linked user
+ * 
+*/
   findUserLinkedToPolicyNumber ({ policyNumber }) {
     validate([{ key: 'policyNumber', value: policyNumber, type: String }])
 
