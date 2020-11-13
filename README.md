@@ -10,13 +10,14 @@ There are two services that provide all of the data needed:
 
 I have created the following endpoints:
 
-- ### User authentiication -> Can be accessed by users with role "users" and "admin"
-----
+### User authentification -> Can be accessed by users with role "users" and "admin"
+---
+```
     - POST REQUEST: /api/user/auth
     - Headers
       Content-type: application/json
     - Recieves on valid email
-    - ```{
+    - {
         "message": "Logged in!",
         "data": {
             "token": "YOUR_TOKEN",
@@ -30,16 +31,18 @@ I have created the following endpoints:
         {
             "email": "YOUR_EMAIL"
         }
-        ```
+        
+```
 
-- ### Get user data filtered by user id -> Can be accessed by users with role "users" and "admin"
+### Get user data filtered by user id -> Can be accessed by users with role "users" and "admin"
 -----
+```
  - POST REQUEST: /api/user/auth
     - Headers: 
       Content-type: application/json
       Bearer: YOUR_TOKEN
     - Recieves on valid email
-    ```{
+    {
     "message": "user successfully retrieved",
     "data": {
         "user": {
@@ -56,10 +59,11 @@ I have created the following endpoints:
             "userId": "ID_TO_SEARCH",
             "tokenId": "YOUR_ID"
         }
-    ```
+```
         
-- ### Get user data filtered by user name -> Can be accessed by users with role "users" and "admin"
+### Get user data filtered by user name -> Can be accessed by users with role "users" and "admin"
 ----
+```
 - POST REQUEST: /api/user/userName
     - Headers: 
       Content-type: application/json
@@ -82,8 +86,10 @@ I have created the following endpoints:
             "userName": "NAME_TO_SEARCH",
             "tokenId": "YOUR_ID"
         }
-    ```
-- ### Get the list of policies linked to a user name -> Can be accessed by users with role "admin"
+```
+### Get the list of policies linked to a user name -> Can be accessed by users with role "admin"
+---
+```
 - POST REQUEST: /api/policy/userName
     - Headers: 
       Content-type: application/json
@@ -110,8 +116,10 @@ I have created the following endpoints:
             "userName": "NAME_TO_SEARCH",
             "tokenId": "YOUR_ID"
         }
-    ```
-- Get the user linked to a policy number -> Can be accessed by users with role "admin"
+```
+### Get the user linked to a policy number -> Can be accessed by users with role "admin"
+---
+```
 - POST REQUEST: /api/user/policy
     - Headers: 
       Content-type: application/json
@@ -134,7 +142,7 @@ I have created the following endpoints:
             "policyNumber": "POLICY_TO_SEARCH",
             "tokenId": "YOUR_ID"
         }
-    ```
+```
 
 There is authification using jsonwebtoken where only the email is needed, as there is no data regarding
 the password.
