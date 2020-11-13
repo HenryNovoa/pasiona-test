@@ -15,7 +15,6 @@ function authorize (roles = []) {
     try {
       const { token, body: { tokenId } } = req
       const { sub, role } = jwt.verify(token, JWT_SECRET)
-      console.log(token)
 
       if (tokenId !== sub) throw Error('token sub does not match user id')
 

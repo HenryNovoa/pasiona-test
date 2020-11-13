@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx mocha src/logic",
     "nodemon": "nodemon server.js",
-    "debug": "node --inspect server.js"
+    "debug": "node --inspect server.js",
+    "standard": "stardard --fix",
+    "coverage": "npx nyc --reporter=html --reporter=text mocha src/logic/*.spec.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +33,7 @@
     "chai": "^4.2.0",
     "mocha": "^8.2.1",
     "nodemon": "^2.0.6",
-    "standard": "^16.0.1"
+    "nyc": "^15.1.0",
+    "standard": "^16.0.2"
   }
 }

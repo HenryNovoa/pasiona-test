@@ -11,26 +11,22 @@ const app = express()
 
 // Create logger
 const logger = winston.createLogger({
-    level: 'info',
-    format: winston.format.json(),
-    transports: [
-        new winston.transports.File({ filename: 'server.log' })
-    ]
+  level: 'info',
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.File({ filename: 'server.log' })
+  ]
 })
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 
 app.use(morgan('combined', { stream: accessLogStream }))
 
-
-
-
 // Upload the routes
 const {
   user,
   policy
 } = require('./src/routes')
-
 
 // Define global middleware
 app.use(express.json())
@@ -44,7 +40,7 @@ app.listen(API_PORT, HOST, () => logger.info(`${packageJSON.name} ${packageJSON.
 
 // Log if the server is abruptly disconnected
 process.on('SIGINT', () => {
-    logger.info('Server abruptly stopped')
+  logger.info('Server abruptly stopped')
 
-    process.exit(0)
+  process.exit(0)
 })

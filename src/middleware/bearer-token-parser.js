@@ -1,6 +1,5 @@
 function bearerTokenParser (req, res, next) {
   try {
-    console.log(req)
     const { headers: { authorization } } = req
 
     const token = authorization.split(' ')[1]

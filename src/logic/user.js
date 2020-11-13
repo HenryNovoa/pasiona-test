@@ -27,7 +27,7 @@ const userService = {
       // Sign the token with user data
       const { id, role } = user
       const token = jwt.sign({ sub: id, role }, JWT_SECRET, { expiresIn: '1 day' })
-      return token
+      return { token, id }
     })()
   },
 
@@ -79,7 +79,7 @@ const userService = {
       // As there might be more than one person with the same name, I decided to use filter
       const user = clients.filter(client => client.name === userName)
 
-      if (!user || !user.length) throw new NotFoundError(`user with userId: ${userName} not found`)
+      if (!user || !user.length) throw new NotFoundError(`user with userName: ${userName} not found`)
 
       return user
     })()

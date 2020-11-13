@@ -11,11 +11,11 @@ router.post('/user/auth', (req, res) => {
   routeHandler(async () => {
     const { email } = req.body
 
-    const token = await userService.authenticateUser({ email })
+    const userData = await userService.authenticateUser({ email })
 
     res.json({
       message: 'Logged in!',
-      data: { token }
+      data: userData
     })
   }, res)
 })
