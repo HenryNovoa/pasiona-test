@@ -1,5 +1,7 @@
 const userService = require('./user')
+const policyService = require('./policy')
 
 module.exports = {
-    userService
+  userService,
+  policyService
 }
