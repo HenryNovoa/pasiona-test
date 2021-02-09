@@ -5,12 +5,12 @@ const { clientData, policyData } = require('../data')
 const policyService = {
 
   /**
- * Finds user policies depending on user name 
- * 
+ * Finds user policies depending on user name
+ *
  * @param {string} userName User's name
- * 
+ *
  * @returns {Promise<Array>} An array of each user found containing an array of their policies
- * 
+ *
  * @throws {NotFoundError} If a user name is not found or has no policies with said name
  * @throws {NotFoundError} If no policies with given name are not found
  * @throws {Error} If there is no data from the provided URL

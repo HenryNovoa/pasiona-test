@@ -1,20 +1,27 @@
+const axios = require('axios')
+const sinon = require('sinon')
+const clients = require('./stub-data/clients.json')
+const policies = require('./stub-data/policies.json')
 const { expect } = require('chai')
-const { policyService } = require('.')
+const { policyService } = require('../logic')
 const { NotFoundError, ValueError } = require('../errors')
-// I am aware that the name can be erased and therefore the tests would not work,
-// but can't think of any other way of doing it
+
 const SPEC_USERNAME = 'Manning'
 
 describe('policyService', () => {
   let randomUser
 
   describe('Get the list of policies linked to a user name', () => {
-    before(async () => {
+    beforeEach(async () => {
       randomUser = `user-${Math.random()}`
+      const data = sinon.stub(axios, 'get')
+      data.onCall(0).resolves({ data: clients })
+      data.onCall(1).resolves({ data: policies })
     })
 
     it('should succeed on finding policies given a valid client', async () => {
       const resultPolicies = await policyService.findPoliciesByUserName({ userName: SPEC_USERNAME })
+
       expect(resultPolicies.length).to.be.at.least(1)
       expect(resultPolicies[0].length).to.be.at.least(1)
       expect(resultPolicies[0][0].id).to.exist
@@ -52,6 +59,10 @@ describe('policyService', () => {
         expect(error).to.be.instanceOf(ValueError)
         expect(error.message).to.equal('userName is empty or blank')
       }
+    })
+
+    afterEach(() => {
+      axios.get.restore()
     })
   })
 })

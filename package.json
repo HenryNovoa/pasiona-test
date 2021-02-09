@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx mocha src/logic",
+    "test": "npx mocha src/test",
     "nodemon": "nodemon server.js",
     "debug": "node --inspect server.js",
-    "standard": "stardard --fix",
-    "coverage": "npx nyc --reporter=html --reporter=text mocha src/logic/*.spec.js"
+    "standard": "npx stardard --fix",
+    "coverage": "npx nyc --reporter=html --reporter=text mocha src/test/*.spec.js"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
     "mocha": "^8.2.1",
     "nodemon": "^2.0.6",
     "nyc": "^15.1.0",
+    "sinon": "^9.2.4",
     "standard": "^16.0.2"
   }
 }
