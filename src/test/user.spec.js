@@ -1,10 +1,11 @@
 const { expect } = require('chai')
-const { policyService, userService } = require('.')
+const sinon = require('sinon')
+const axios = require('axios')
+const clients = require('./stub-data/clients.json')
+const policies = require('./stub-data/policies.json')
+const { policyService, userService } = require('../logic')
 const { NotFoundError, ValueError } = require('../errors')
-// I am aware that the name can be erased and therefore the tests would not work,
-// but can't think of any other way of doing it
-// I would add to the server a new user and eliminate it at the end, given that it is not possible,
-// I used a template from the server
+
 const SPEC_EMAIL = 'britneyblankenship@quotezart.com'
 const SPEC_ID = 'a0ece5db-cd14-4f21-812f-966633e7be86'
 const SPEC_USERNAME = 'Britney'
@@ -16,13 +17,22 @@ describe('userService', () => {
   let randomUser
 
   before(async () => {
+    const data = sinon.stub(axios, 'get')
+    data.resolves({ data: clients })
     randomUser = `user-${Math.random()}`
     const user = await userService.authenticateUser({ email: SPEC_EMAIL })
     token = user.token
     id = user.id
+    // Restore the axios function after authenticating
+    axios.get.restore()
   })
 
   describe('authenticateUser', () => {
+    before(async () => {
+      const users = sinon.stub(axios, 'get')
+      users.resolves({ data: clients })
+    })
+
     it('should authenticate correctly on valid email', async () => {
       const user = await userService.authenticateUser({ email: SPEC_EMAIL })
 
@@ -47,9 +57,18 @@ describe('userService', () => {
         expect(error.message).to.equal(`email: ${nonStringEmail} is not a string`)
       }
     })
+
+    after(() => {
+      axios.get.restore()
+    })
   })
 
   describe('find user by email', () => {
+    before(async () => {
+      const users = sinon.stub(axios, 'get')
+      users.resolves({ data: clients })
+    })
+
     it('should succeed on finding user given a valid email', async () => {
       const user = await userService.findUserByEmail({ email: SPEC_EMAIL })
 
@@ -86,9 +105,18 @@ describe('userService', () => {
         expect(error.message).to.equal('email is empty or blank')
       }
     })
+
+    after(() => {
+      axios.get.restore()
+    })
   })
 
   describe('find user by id', () => {
+    before(async () => {
+      const users = sinon.stub(axios, 'get')
+      users.resolves({ data: clients })
+    })
+
     it('should succeed on finding user given a valid userId', async () => {
       const user = await userService.findUserByUserId({ userId: SPEC_ID })
 
@@ -125,9 +153,18 @@ describe('userService', () => {
         expect(error.message).to.equal('userId is empty or blank')
       }
     })
+
+    after(() => {
+      axios.get.restore()
+    })
   })
 
   describe('find user by user name', () => {
+    before(async () => {
+      const users = sinon.stub(axios, 'get')
+      users.resolves({ data: clients })
+    })
+
     it('should succeed on finding user given a valid userId', async () => {
       const user = await userService.findUserByUserName({ userName: SPEC_USERNAME })
       expect(user[0].name).to.equal(SPEC_USERNAME)
@@ -161,9 +198,18 @@ describe('userService', () => {
         expect(error.message).to.equal('userName is empty or blank')
       }
     })
+
+    after(() => {
+      axios.get.restore()
+    })
   })
 
   describe('find user linked to policy number', () => {
+    beforeEach(() => {
+      const data = sinon.stub(axios, 'get')
+      data.onCall(0).resolves({ data: clients })
+      data.onCall(1).resolves({ data: policies })
+    })
     it('should succeed on finding user given a valid policy number', async () => {
       const user = await userService.findUserLinkedToPolicyNumber({ policyNumber: POLICY_NUMBER })
 
@@ -199,6 +245,10 @@ describe('userService', () => {
         expect(error).to.be.instanceOf(ValueError)
         expect(error.message).to.equal('policyNumber is empty or blank')
       }
+    })
+
+    afterEach(() => {
+      axios.get.restore()
     })
   })
 })
